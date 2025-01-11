@@ -32,4 +32,4 @@ jobs:
           context: .
           platforms: linux/amd64
           push: true
-          tags: <your-dockerhub-username>/scarches-iga:latest
+          tags: ignagaralv/scarches-iga:latest
