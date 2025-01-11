@@ -24,11 +24,11 @@ SHELL ["/bin/bash", "-c"]
 RUN git clone https://github.com/theislab/scarches /tmp/scarches
 
 # 5) Create scarches environment using scArches’ own YAML
-RUN conda env create -f /tmp/scarches/envs/scarches_linux.yaml \
-    && conda clean -afy
+RUN /opt/miniconda/bin/conda env create -f /tmp/scarches/envs/scarches_linux.yaml \
+    && /opt/miniconda/bin/conda clean -afy
 
 # 6) Register scArches kernel (optional but recommended)
-RUN conda run -n scarches python -m ipykernel install --sys-prefix \
+RUN /opt/miniconda/bin/conda  run -n scarches python -m ipykernel install --sys-prefix \
     --name scarches --display-name "scArches Environment"
 
 # 7) Default to using PATH from scarches environment
