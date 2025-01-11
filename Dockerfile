@@ -28,7 +28,7 @@ RUN /opt/miniconda/bin/conda env create -f /tmp/scarches/envs/scarches_linux.yam
     && /opt/miniconda/bin/conda clean -afy
 
 # Install ipykernel inside scarches environment
-RUN /opt/miniconda/bin/conda run -n scarches conda install -y ipykernel \
+RUN /opt/miniconda/bin/conda run -n scarches conda install -y ipykernel jupyter \
     && /opt/miniconda/bin/conda clean -afy
 
 # 6) Register scArches kernel (optional but recommended)
