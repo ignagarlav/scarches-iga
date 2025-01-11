@@ -17,34 +17,22 @@ RUN wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -
     && bash /tmp/miniconda.sh -b -p /opt/miniconda \
     && rm /tmp/miniconda.sh
 
-# 3) Add conda to PATH
-ENV PATH="/opt/miniconda/bin:${PATH}"
-
-# Ensure all RUN commands use /bin/bash
+# Make sure RUN commands use /bin/bash
 SHELL ["/bin/bash", "-c"]
 
-# 4) Copy your environment.yml into the container
-#    This file should define the environment name, e.g. name: scarches
-COPY environment.yml /tmp/environment.yml
+# 4) Clone scArches repo
+RUN git clone https://github.com/theislab/scarches /tmp/scarches
 
-# 5) Create the Conda environment inside Docker
-RUN conda init bash \
-    && source ~/.bashrc \
-    && conda env create -f /tmp/environment.yml \
+# 5) Create scarches environment using scArches’ own YAML
+RUN conda env create -f /tmp/scarches/envs/scarches_linux.yaml \
     && conda clean -afy
 
-# 6) Clone and install scarches from GitHub
-RUN git clone https://github.com/theislab/scarches /tmp/scarches && \
-    conda run -n scarches pip install -e /tmp/scarches
-
-# 7) Register the IPython kernel (named "scarches")
-RUN conda run -n scarches python -m ipykernel install --user \
+# 6) Register scArches kernel (optional but recommended)
+RUN conda run -n scarches python -m ipykernel install --sys-prefix \
     --name scarches --display-name "scArches Environment"
 
-# 8) Make the scarches environment the default PATH
-#    This means commands like 'python' or 'jupyter' will come from the env
+# 7) Default to using PATH from scarches environment
 ENV PATH="/opt/miniconda/envs/scarches/bin:${PATH}"
 
-# 9) Default command: start a bash shell
+# 8) Start a bash shell by default
 CMD ["/bin/bash"]
-
