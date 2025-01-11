@@ -27,6 +27,10 @@ RUN git clone https://github.com/theislab/scarches /tmp/scarches
 RUN /opt/miniconda/bin/conda env create -f /tmp/scarches/envs/scarches_linux.yaml \
     && /opt/miniconda/bin/conda clean -afy
 
+# Install ipykernel inside scarches environment
+RUN /opt/miniconda/bin/conda run -n scarches conda install -y ipykernel \
+    && /opt/miniconda/bin/conda clean -afy
+
 # 6) Register scArches kernel (optional but recommended)
 RUN /opt/miniconda/bin/conda  run -n scarches python -m ipykernel install --sys-prefix \
     --name scarches --display-name "scArches Environment"
