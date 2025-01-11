@@ -1,0 +1,17 @@
+name: scarches
+channels:
+  - conda-forge
+  - bioconda
+  - defaults
+dependencies:
+  - scanpy[skmisc]
+  - ipykernel
+  - jupyter
+  - torchvision
+  - pytorch
+  - torchaudio
+  - numpy
+  - pip
+  - python=3.9
+variables:
+  SKLEARN_ALLOW_DEPRECATED_SKLEARN_PACKAGE_INSTALL: true
